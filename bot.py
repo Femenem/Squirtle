@@ -161,9 +161,5 @@ loginData = open(loginFile)
 login = json.load(loginData)
 status = discord.Activity(name="", state="", type=discord.ActivityType.playing, details="")
 client = Bot(activity=status)
-if(discord.opus.is_loaded()):
-    print("Opus already loaded")
-    client.run(login['token'])
-else:
-    discord.opus.load_opus('libopus-0.dll')
-    client.run(login['token'])
+
+client.run(login['token'])
