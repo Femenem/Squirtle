@@ -70,9 +70,7 @@ class Bot(discord.Client):
             if(lastTime <= triggerTime and now >= triggerTime):
                 sendMessage =  True
                 lastTime = now
-                print("True")
             else:
-                print("False")
                 sendMessage = False
 
             if(sendMessage):
