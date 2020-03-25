@@ -6,6 +6,24 @@ from pprint import pprint
 import datetime
 import asyncio
 import random
+import logging
+
+# create logger with 'spam_application'
+logger = logging.getLogger('squirtle_bot')
+logger.setLevel(logging.DEBUG)
+# create file handler which logs even debug messages
+fh = logging.FileHandler('bot.log')
+fh.setLevel(logging.DEBUG)
+# create console handler with a higher log level
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+# create formatter and add it to the handlers
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+fh.setFormatter(formatter)
+ch.setFormatter(formatter)
+# add the handlers to the logger
+logger.addHandler(fh)
+logger.addHandler(ch)
 
 helpMessage = """
 ```
@@ -62,12 +80,15 @@ class Bot(discord.Client):
 
         while(1):
             if(self.targetGuild == None):
-                print("Cannot find target guild.")
+                logger.error('Cannot find target guild.')
             else:
+                logger.info("Found guild, finding name")
                 member = discord.utils.find(lambda m: m.name == 'EpicEnchilada', self.targetGuild.members)
+                logger.info("Found name: " + member.display_name)
 
             now = datetime.datetime.now().time()
             if(lastTime <= triggerTime and now >= triggerTime):
+                logger.info("Sending message!")
                 sendMessage =  True
                 lastTime = now
             else:
@@ -79,21 +100,26 @@ class Bot(discord.Client):
                     roll = random.randint(0, 1)
                     if (roll == 0): ## Texts
                         roll =  random.randint(0, len(messages)-1)
+                        logger.info("Sending message: " + messages[roll])
                         await member.send(messages[roll])
                     elif (roll == 1): ## Pictures
                         roll = random.randint(0, 3)
                         if(roll == 0):
                             file = discord.File("img/cat-pill.jpeg")
+                            logger.info("Sending picture, cat pill")
                             await member.send(content="nom nom nom", file=file)
                         elif(roll == 1):
                             file = discord.File("img/cat-pill2.jpeg")
+                            logger.info("Sending picture, cat pill 2")
                             await member.send(content="dont make me chew your fingers...", file=file)
                         elif(roll == 2):
                             file = discord.File("img/happy-pills.jpeg")
+                            logger.info("Sending picture, happy pills")
                             await member.send(content=":)", file=file)
                         elif(roll == 3):
                             file = discord.File("img/matrix-pill.jpeg")
-                            await member.send(content="which one?", file=file)
+                            logger.info("Sending picture, matrix pill")
+                            await member.send(content="take it!!", file=file)
 
                     sendMessage = False
                     break
