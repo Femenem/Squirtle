@@ -78,13 +78,31 @@ class Bot(discord.Client):
         messages.append("Go drug yourself.")
         messages.append("Time to take some pills.")
 
+        foundUser = False
+
+        if(self.targetGuild == None):
+            logger.error('Cannot find target guild.')
+            foundUser = False
+        else:
+            logger.info("Found guild, finding name")
+            foundUser = True
+            squirt = discord.utils.find(lambda m: m.name == 'EpicEnchilada', self.targetGuild.members)
+            dozy = discord.utils.find(lambda m: m.name == 'Dozy', self.targetGuild.members)
+            logger.info("Found name: " + squirt.display_name)
+            logger.info("Found name: " + dozy.display_name)
+
         while(1):
-            if(self.targetGuild == None):
-                logger.error('Cannot find target guild.')
-            else:
-                logger.info("Found guild, finding name")
-                member = discord.utils.find(lambda m: m.name == 'EpicEnchilada', self.targetGuild.members)
-                logger.info("Found name: " + member.display_name)
+            if(not foundUser):
+                if(self.targetGuild == None):
+                    logger.error('Cannot find target guild.')
+                    foundUser = False
+                else:
+                    logger.info("Found guild, finding name")
+                    foundUser = True
+                    squirt = discord.utils.find(lambda m: m.name == 'EpicEnchilada', self.targetGuild.members)
+                    dozy = discord.utils.find(lambda m: m.name == 'Dozy', self.targetGuild.members)
+                    logger.info("Found name: " + squirt.display_name)
+                    logger.info("Found name: " + dozy.display_name)
 
             now = datetime.datetime.now().time()
             if(lastTime <= triggerTime and now >= triggerTime):
@@ -95,34 +113,42 @@ class Bot(discord.Client):
                 sendMessage = False
 
             if(sendMessage):
-                while not self.is_closed():
-                    ## RANDOM HERE
-                    roll = random.randint(0, 1)
-                    if (roll == 0): ## Texts
-                        roll =  random.randint(0, len(messages)-1)
-                        logger.info("Sending message: " + messages[roll])
-                        await member.send(messages[roll])
-                    elif (roll == 1): ## Pictures
-                        roll = random.randint(0, 3)
-                        if(roll == 0):
-                            file = discord.File("img/cat-pill.jpeg")
-                            logger.info("Sending picture, cat pill")
-                            await member.send(content="nom nom nom", file=file)
-                        elif(roll == 1):
-                            file = discord.File("img/cat-pill2.jpeg")
-                            logger.info("Sending picture, cat pill 2")
-                            await member.send(content="dont make me chew your fingers...", file=file)
-                        elif(roll == 2):
-                            file = discord.File("img/happy-pills.jpeg")
-                            logger.info("Sending picture, happy pills")
-                            await member.send(content=":)", file=file)
-                        elif(roll == 3):
-                            file = discord.File("img/matrix-pill.jpeg")
-                            logger.info("Sending picture, matrix pill")
-                            await member.send(content="take it!!", file=file)
+                try:
+                    while not self.is_closed():
+                        ## RANDOM HERE
+                        roll = random.randint(0, 1)
+                        if (roll == 0): ## Texts
+                            roll =  random.randint(0, len(messages)-1)
+                            logger.info("Sending message: " + messages[roll])
+                            await squirt.send(messages[roll])
+                            await dozy.send(messages[roll])
+                        elif (roll == 1): ## Pictures
+                            roll = random.randint(0, 3)
+                            if(roll == 0):
+                                file = discord.File("img/cat-pill.jpeg")
+                                logger.info("Sending picture, cat pill")
+                                await squirt.send(content="nom nom nom", file=file)
+                                await dozy.send(content="nom nom nom", file=file)
+                            elif(roll == 1):
+                                file = discord.File("img/cat-pill2.jpeg")
+                                logger.info("Sending picture, cat pill 2")
+                                await squirt.send(content="dont make me chew your fingers...", file=file)
+                                await dozy.send(content="dont make me chew your fingers...", file=file)
+                            elif(roll == 2):
+                                file = discord.File("img/happy-pills.jpeg")
+                                logger.info("Sending picture, happy pills")
+                                await squirt.send(content=":)", file=file)
+                                await dozy.send(content=":)", file=file)
+                            elif(roll == 3):
+                                file = discord.File("img/matrix-pill.jpeg")
+                                logger.info("Sending picture, matrix pill")
+                                await squirt.send(content="take it!!", file=file)
+                                await dozy.send(content="take it!!", file=file)
 
-                    sendMessage = False
-                    break
+                        sendMessage = False
+                        break
+                except Exception as e:
+                    logging.exception("message")
 
             await asyncio.sleep(60) # task runs every 60 seconds
 
@@ -145,7 +171,7 @@ class Bot(discord.Client):
             if(option[0].lower() == 'help'):
                 await message.channel.send(helpMessage)
             if(option[0].lower() == 'dev'):
-                devUrl = "https://github.com/Mattmor/Discord-bot"
+                devUrl = "https://github.com/Mattmor/Squirtle-bot"
                 await message.channel.send("This is the dev repo: " + devUrl)
             #####################
             # Movie options     #
