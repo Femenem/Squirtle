@@ -180,7 +180,7 @@ class Bot(discord.Client):
             return
 
         privateChannel = discord.ChannelType.private
-        if message.author == discord.utils.find(lambda m: m.name == 'Dozy', self.targetGuild.members) and message.channel.type == privateChannel:
+        if message.author == discord.utils.find(lambda m: m.name == 'EpicEnchilada', self.targetGuild.members) and message.channel.type == privateChannel:
             logger.info(message.content)
             dozy = discord.utils.find(lambda m: m.name == 'Dozy', self.targetGuild.members)
             await dozy.send(message.content)
