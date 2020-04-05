@@ -77,6 +77,8 @@ class Bot(discord.Client):
         messages.append("TAKE YOUR PILLS!!!!!")
         messages.append("Go drug yourself.")
         messages.append("Time to take some pills.")
+        messages.append("Drugs. Now. (And not the green ones.)")
+        messages.append("Drug time!")
 
         foundUser = False
 
@@ -107,7 +109,7 @@ class Bot(discord.Client):
             now = datetime.datetime.now().time()
             if(lastTime <= triggerTime and now >= triggerTime):
                 logger.info("Sending message!")
-                sendMessage =  True
+                #sendMessage =  True
                 lastTime = now
             else:
                 sendMessage = False
@@ -123,7 +125,7 @@ class Bot(discord.Client):
                             await squirt.send(messages[roll])
                             await dozy.send(messages[roll])
                         elif (roll == 1): ## Pictures
-                            roll = random.randint(0, 3)
+                            roll = random.randint(0, 5)
                             if(roll == 0):
                                 file = discord.File("img/cat-pill.jpeg")
                                 logger.info("Sending picture, cat pill")
@@ -144,11 +146,26 @@ class Bot(discord.Client):
                                 logger.info("Sending picture, matrix pill")
                                 await squirt.send(content="take it!!", file=file)
                                 await dozy.send(content="take it!!", file=file)
+                            elif(roll == 4):
+                                file = discord.File("img/cat-pill3.jpeg")
+                                logger.info("Sending picture, cat pill 3")
+                                await squirt.send(content="", file=file)
+                                await dozy.send(content="", file=file)
+                            elif(roll == 5):
+                                file = discord.File("img/neko-girls.png")
+                                logger.info("Sending picture, neko girls")
+                                await squirt.send(content="Speaking of drugs...its that tiime again ;)", file=file)
+                                await dozy.send(content="Speaking of drugs...its that tiime again ;)", file=file)
+                            elif(roll == 6):
+                                file = discord.File("img/cat-pill4.jpeg")
+                                logger.info("Sending picture, cat pill 4")
+                                await squirt.send(content=":P", file=file)
+                                await dozy.send(content=":P", file=file)
 
                         sendMessage = False
                         break
                 except Exception as e:
-                    logging.exception("message")
+                    logger.exception("message")
 
             await asyncio.sleep(60) # task runs every 60 seconds
 
@@ -161,6 +178,14 @@ class Bot(discord.Client):
         # don't respond to ourselves
         if message.author == self.user:
             return
+
+        privateChannel = discord.ChannelType.private
+        if message.author == discord.utils.find(lambda m: m.name == 'Dozy', self.targetGuild.members) and message.channel.type == privateChannel:
+            logger.info(message.content)
+            dozy = discord.utils.find(lambda m: m.name == 'Dozy', self.targetGuild.members)
+            await dozy.send(message.content)
+            return
+
 
         if message.content == 'ping':
             await message.channel.send('pong')
