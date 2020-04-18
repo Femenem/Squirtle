@@ -128,39 +128,46 @@ class Bot(discord.Client):
                             roll = random.randint(0, 5)
                             if(roll == 0):
                                 file = discord.File("img/cat-pill.jpeg")
+                                file2 = file
                                 logger.info("Sending picture, cat pill")
                                 await squirt.send(content="nom nom nom", file=file)
-                                await dozy.send(content="nom nom nom", file=file)
+                                await dozy.send(content="nom nom nom", file=file2)
                             elif(roll == 1):
                                 file = discord.File("img/cat-pill2.jpeg")
+                                file2 = file
                                 logger.info("Sending picture, cat pill 2")
                                 await squirt.send(content="dont make me chew your fingers...", file=file)
-                                await dozy.send(content="dont make me chew your fingers...", file=file)
+                                await dozy.send(content="dont make me chew your fingers...", file=file2)
                             elif(roll == 2):
                                 file = discord.File("img/happy-pills.jpeg")
+                                file2 = file
                                 logger.info("Sending picture, happy pills")
                                 await squirt.send(content=":)", file=file)
-                                await dozy.send(content=":)", file=file)
+                                await dozy.send(content=":)", file=file2)
                             elif(roll == 3):
                                 file = discord.File("img/matrix-pill.jpeg")
+                                file2 = file
                                 logger.info("Sending picture, matrix pill")
                                 await squirt.send(content="take it!!", file=file)
-                                await dozy.send(content="take it!!", file=file)
+                                await dozy.send(content="take it!!", file=file2)
                             elif(roll == 4):
                                 file = discord.File("img/cat-pill3.jpeg")
+                                file2 = file
                                 logger.info("Sending picture, cat pill 3")
                                 await squirt.send(content="", file=file)
-                                await dozy.send(content="", file=file)
+                                await dozy.send(content="", file=file2)
                             elif(roll == 5):
                                 file = discord.File("img/neko-girls.png")
+                                file2 = file
                                 logger.info("Sending picture, neko girls")
                                 await squirt.send(content="Speaking of drugs...its that tiime again ;)", file=file)
                                 await dozy.send(content="Speaking of drugs...its that tiime again ;)", file=file)
                             elif(roll == 6):
                                 file = discord.File("img/cat-pill4.jpeg")
+                                file2 = file
                                 logger.info("Sending picture, cat pill 4")
                                 await squirt.send(content=":P", file=file)
-                                await dozy.send(content=":P", file=file)
+                                await dozy.send(content=":P", file=file2)
 
                         sendMessage = False
                         break
