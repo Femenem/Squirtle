@@ -107,9 +107,10 @@ class Bot(discord.Client):
             if(lastTime <= triggerTime and now >= triggerTime):
                 logger.info("Sending message!")
                 sendMessage =  True
-                lastTime = now
             else:
                 sendMessage = False
+            
+            lastTime = now
 
             if(sendMessage):
                 try:
