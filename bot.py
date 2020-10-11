@@ -1,8 +1,5 @@
 import discord
 import json
-from classes.Movie import Movie
-import sqlite3
-from pprint import pprint
 import datetime
 import asyncio
 import random
@@ -203,18 +200,8 @@ class Bot(discord.Client):
             if(option[0].lower() == 'help'):
                 await message.channel.send(helpMessage)
             if(option[0].lower() == 'dev'):
-                devUrl = "https://github.com/Mattmor/Squirtle-bot"
+                devUrl = "https://github.com/Mattmor/Squirtle"
                 await message.channel.send("This is the dev repo: " + devUrl)
-            #####################
-            # Movie options     #
-            #####################
-            if(option[0].lower() == 'movie' or option[0].lower() == 'film'):
-                movieString = ""
-                for op in option:
-                    if(op != 'movie' and op != 'film'):
-                        movieString += op + " "
-                movie = Movie(movieString)
-                await message.channel.send(movie.print_movie())
             #####################
             # Random options    #
             #####################
