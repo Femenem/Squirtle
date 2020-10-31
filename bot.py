@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import discord
 import json
 import datetime
@@ -46,7 +47,8 @@ helpMessage = """
 """
 
 class Bot(discord.Client):
-    client = discord.Client
+    intents = discord.Intents.all()
+    client = discord.Client(intents=intents)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -58,13 +60,10 @@ class Bot(discord.Client):
         await self.wait_until_ready()
         self.targetGuild = None
 
-        serverFile = "settings/allowedServers.json"
-        serverData = open(serverFile)
-        server = json.load(serverData)
         for guild in client.guilds:
-            if(guild.name == server['targetServer']):
+            if(guild.id == 105348086737420288):
                 self.targetGuild = guild
-                print("Target guild found!")
+                logger.info("Target guild found!")
 
         sendMessage = False
         lastTime = datetime.datetime.now().time()
@@ -85,8 +84,9 @@ class Bot(discord.Client):
         else:
             logger.info("Found guild, finding name")
             foundUser = True
-            squirt = discord.utils.find(lambda m: m.name == 'EpicEnchilada', self.targetGuild.members)
-            dozy = discord.utils.find(lambda m: m.name == 'Dozy', self.targetGuild.members)
+            users = await self.targetGuild.query_members(user_ids=[105308157592481792, 105352012127838208])
+            squirt = users[1]
+            dozy = users[0]
             logger.info("Found name: " + squirt.display_name)
             logger.info("Found name: " + dozy.display_name)
 
@@ -177,7 +177,7 @@ class Bot(discord.Client):
 
     async def on_ready(self):
         # self.load_movie_lists()
-        print('Logged on as', self.user)
+        logger.info('Logged on as ' + self.user.name)
 
     async def on_message(self, message):
         # don't respond to ourselves
