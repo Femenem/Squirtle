@@ -123,7 +123,7 @@ class Bot(discord.Client):
                             await squirt.send(messages[roll])
                             await dozy.send(messages[roll])
                         elif (roll == 1): ## Pictures
-                            roll = random.randint(0, 5)
+                            roll = random.randint(0, 7)
                             if(roll == 0):
                                 file = discord.File("img/cat-pill.jpeg")
                                 file2 = discord.File("img/cat-pill.jpeg")
